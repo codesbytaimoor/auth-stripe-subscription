@@ -58,8 +58,3 @@
 - JWT for authentication
 - Role-based access control
 - HTTP-only secure cookies
-
-
-<!-- Image -->
-
-![Subscription Plans](./sub.png)
