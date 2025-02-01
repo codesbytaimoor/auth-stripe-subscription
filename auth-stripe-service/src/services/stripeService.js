@@ -153,7 +153,6 @@ class StripeService {
         save_default_payment_method: 'on_subscription'
       },
       expand: ['latest_invoice.payment_intent'],
-      automatic_tax: { enabled: true },
       collection_method: 'charge_automatically'
     };
 

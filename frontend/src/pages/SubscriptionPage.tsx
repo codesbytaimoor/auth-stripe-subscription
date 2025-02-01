@@ -14,7 +14,7 @@ const plans = [
     price: 9.99,
     features: ['Feature 1', 'Feature 2', 'Feature 3'],
     type: 'monthly',
-    id: '679ab8055d41edb9395a22ee',
+    id: '679e9ddf9c7c427a81121218',
     couponId: "679abca40d17ddb7b792aafc" 
   },
   {
@@ -23,7 +23,7 @@ const plans = [
     features: ['All Basic Features', 'Feature 4', 'Feature 5', 'Feature 6'],
     type: 'yearly',
     isPopular: true,
-    id: '679ab80a5d41edb9395a22f1',
+    id: '679e9ead9c7c427a8112121a',
     couponId: "679ab9075d41edb9395a22fc"
   },
   {

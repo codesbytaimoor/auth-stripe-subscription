@@ -39,8 +39,30 @@ api.interceptors.response.use(
 export const authAPI = {
   login: async (email: string, password: string): Promise<string> => {
     try {
-      const response = await api.post<{ accessToken: string }>('/auth/login', { email, password });
-      const token = response.data.accessToken;
+      interface LoginResponse {
+        login: {
+          tokens: {
+            accessToken: string;
+            refreshToken: string;
+          };
+          role: string;
+          user: {
+            isActive: boolean;
+            _id: string;
+            username: string;
+            email: string;
+            role: string;
+            profile: string[];
+            stripeCustomerId?: string;
+            [key: string]: any;  // for other properties
+          };
+        };
+        message: string;
+      }
+
+      const response = await api.post<LoginResponse>('/auth/login', { email, password });
+      console.log(response.data);
+      const token = response.data.login.tokens.accessToken;
       localStorage.setItem('token', token);
       return token;
     } catch (error) {
@@ -51,8 +73,29 @@ export const authAPI = {
   
   register: async (email: string, password: string, name: string): Promise<string> => {
     try {
-      const response = await api.post<{ token: string }>('/auth/register', { email, password, name });
-      const token = response.data.token;
+      interface LoginResponse {
+        login: {
+          tokens: {
+            accessToken: string;
+            refreshToken: string;
+          };
+          role: string;
+          user: {
+            isActive: boolean;
+            _id: string;
+            username: string;
+            email: string;
+            role: string;
+            profile: string[];
+            stripeCustomerId?: string;
+            [key: string]: any;  // for other properties
+          };
+        };
+        message: string;
+      }
+
+      const response = await api.post<LoginResponse>('/auth/register', { email, password, name });
+      const token = response.data.login.tokens.accessToken;
       localStorage.setItem('token', token);
       return token;
     } catch (error) {
@@ -75,12 +118,12 @@ export const subscriptionAPI = {
   },
 
   createSetupIntent: async () => {
-    const response = await api.post<{ clientSecret: string }>('/stripe/setup-intent');
+    const response = await api.post<{ clientSecret: string }>('/subscription/setup-intent');
     return response.data;
   },
 
   createSubscription: async (planId: string, couponId: string | null, paymentMethodId: string) => {
-    const response = await api.post<{ subscriptionId: string }>('/stripe/subscription', {
+    const response = await api.post<{ subscriptionId: string }>('/subscription', {
       planId,
       couponId,
       paymentMethodId,
@@ -104,12 +147,12 @@ export const subscriptionAPI = {
   },
 
   getSubscriptionDetails: async (): Promise<{ subscription: SubscriptionInfo }> => {
-    const response = await api.get<{ subscription: SubscriptionInfo }>('/stripe/subscription');
+    const response = await api.get<{ subscription: SubscriptionInfo }>('/subscription');
     return response.data;
   },
 
   upgradeSubscription: async (newPlanId: string, couponId: string | null): Promise<{ subscription: SubscriptionInfo }> => {
-    const response = await api.post<{ subscription: SubscriptionInfo }>('/stripe/subscription/upgrade', {
+    const response = await api.post<{ subscription: SubscriptionInfo }>('/subscription/upgrade', {
       newPlanId,
       couponId,
     });
@@ -117,12 +160,12 @@ export const subscriptionAPI = {
   },
 
   cancelSubscription: async (): Promise<{ subscription: SubscriptionInfo }> => {
-    const response = await api.post<{ subscription: SubscriptionInfo }>('/stripe/subscription/cancel');
+    const response = await api.post<{ subscription: SubscriptionInfo }>('/subscription/cancel');
     return response.data;
   },
 
   reactivateSubscription: async (): Promise<{ subscription: SubscriptionInfo }> => {
-    const response = await api.post<{ subscription: SubscriptionInfo }>('/stripe/subscription/reactivate');
+    const response = await api.post<{ subscription: SubscriptionInfo }>('/subscription/reactivate');
     return response.data;
   }
 };

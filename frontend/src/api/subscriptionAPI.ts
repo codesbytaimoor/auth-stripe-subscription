@@ -29,12 +29,12 @@ const subscriptionAPI = {
   },
 
   getSubscriptionDetails: async (): Promise<{ subscription: SubscriptionInfo }> => {
-    const response = await api.get<{ subscription: SubscriptionInfo }>('/stripe/subscription');
+    const response = await api.get<{ subscription: SubscriptionInfo }>('/subscription');
     return response.data;
   },
 
   upgradeSubscription: async (newPlanType: string, couponId: string | null): Promise<{ subscription: SubscriptionInfo }> => {
-    const response = await api.post<{ subscription: SubscriptionInfo }>('/stripe/subscription/upgrade', {
+    const response = await api.post<{ subscription: SubscriptionInfo }>('/subscription/upgrade', {
       newPlanType,
       couponId,
     });
@@ -42,12 +42,12 @@ const subscriptionAPI = {
   },
 
   cancelSubscription: async (): Promise<{ subscription: SubscriptionInfo }> => {
-    const response = await api.post<{ subscription: SubscriptionInfo }>('/stripe/subscription/cancel');
+    const response = await api.post<{ subscription: SubscriptionInfo }>('/subscription/cancel');
     return response.data;
   },
 
   reactivateSubscription: async (): Promise<{ subscription: SubscriptionInfo }> => {
-    const response = await api.post<{ subscription: SubscriptionInfo }>('/stripe/subscription/reactivate');
+    const response = await api.post<{ subscription: SubscriptionInfo }>('/subscription/reactivate');
     return response.data;
   }
 };
