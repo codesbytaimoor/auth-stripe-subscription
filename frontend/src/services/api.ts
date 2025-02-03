@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { PaymentMethod, SubscriptionInfo, Plan } from '../types/subscription';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
 // Create axios instance with default config
 const api = axios.create({
@@ -40,10 +40,10 @@ export const authAPI = {
   login: async (email: string, password: string): Promise<string> => {
     try {
       interface LoginResponse {
-        login: {
-          tokens: {
-            accessToken: string;
-            refreshToken: string;
+        tokens: {
+          access: {
+            token: string;
+            // refreshToken: string;
           };
           role: string;
           user: {
@@ -62,7 +62,7 @@ export const authAPI = {
 
       const response = await api.post<LoginResponse>('/auth/login', { email, password });
       console.log(response.data);
-      const token = response.data.login.tokens.accessToken;
+      const token = response.data.tokens.access.token;
       localStorage.setItem('token', token);
       return token;
     } catch (error) {
@@ -74,10 +74,10 @@ export const authAPI = {
   register: async (email: string, password: string, name: string): Promise<string> => {
     try {
       interface LoginResponse {
-        login: {
-          tokens: {
-            accessToken: string;
-            refreshToken: string;
+        tokens: {
+          access: {
+            token: string;
+            // refreshToken: string;
           };
           role: string;
           user: {
@@ -95,7 +95,7 @@ export const authAPI = {
       }
 
       const response = await api.post<LoginResponse>('/auth/register', { email, password, name });
-      const token = response.data.login.tokens.accessToken;
+      const token = response.data.tokens.access.token;
       localStorage.setItem('token', token);
       return token;
     } catch (error) {
@@ -118,12 +118,12 @@ export const subscriptionAPI = {
   },
 
   createSetupIntent: async () => {
-    const response = await api.post<{ clientSecret: string }>('/subscription/setup-intent');
+    const response = await api.post<{ clientSecret: string }>('/subscription/stripe/setup-intent');
     return response.data;
   },
 
   createSubscription: async (planId: string, couponId: string | null, paymentMethodId: string) => {
-    const response = await api.post<{ subscriptionId: string }>('/subscription', {
+    const response = await api.post<{ subscriptionId: string }>('/subscription/stripe', {
       planId,
       couponId,
       paymentMethodId,
@@ -132,7 +132,7 @@ export const subscriptionAPI = {
   },
 
   getPaymentMethods: async () => {
-    const response = await api.get<PaymentMethod[]>('/stripe/payment-methods');
+    const response = await api.get<PaymentMethod[]>('/subscription/stripe/payment-methods');
     return response.data;
   },
 

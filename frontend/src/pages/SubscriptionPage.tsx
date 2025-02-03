@@ -14,8 +14,8 @@ const plans = [
     price: 9.99,
     features: ['Feature 1', 'Feature 2', 'Feature 3'],
     type: 'monthly',
-    id: '679e9ddf9c7c427a81121218',
-    couponId: "679abca40d17ddb7b792aafc" 
+    id: '67a123da0a27be2768a56ce7',
+    couponId: null
   },
   {
     name: 'Pro Yearly',
@@ -23,16 +23,16 @@ const plans = [
     features: ['All Basic Features', 'Feature 4', 'Feature 5', 'Feature 6'],
     type: 'yearly',
     isPopular: true,
-    id: '679e9ead9c7c427a8112121a',
-    couponId: "679ab9075d41edb9395a22fc"
+    id: '67a125020a27be2768a56e25',
+    couponId: null
   },
   {
     name: 'Lifetime',
     price: 49.99,
     features: ['All Pro Features', 'Feature 7', 'Feature 8', 'Feature 9'],
     type: 'lifetime',
-    id: '679ab80e5d41edb9395a22f4',
-    couponId: "679ab9075d41edb9395a22fc"
+    id: '67a125b40a27be2768a56eef',
+    couponId: null
   }
 ];
 

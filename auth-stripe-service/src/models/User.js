@@ -28,13 +28,13 @@ const UserSchema = new mongoose.Schema({
     enum: ['user', 'admin', 'superadmin'],
     default: 'user'
   },
-  isActive: {
-    type: Boolean,
-    default: true
-  },
   refreshToken: {
     type: String,
     default: null
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   },
   stripeCustomerId: {
     type: String,
@@ -49,14 +49,14 @@ const UserSchema = new mongoose.Schema({
 });
 
 // Password hashing middleware
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
 // Method to check password
-UserSchema.methods.comparePassword = async function(candidatePassword) {
+UserSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
